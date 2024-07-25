@@ -10,9 +10,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.boot.DAO.CompanyInfoDAO;
+import com.boot.DAO.CompanyListPageDAO;
 import com.boot.DTO.ComNoticeDTO;
 import com.boot.DTO.CompanyInfoDTO;
+import com.boot.DTO.Standard;
 import com.boot.Service.CompanyInfo;
+import com.boot.Service.CompanyListPageService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -35,9 +39,13 @@ public class MainController {
 	@Autowired
 	private CompanyInfo infoService;
 	
+//	@Autowired
+//	private CompanyListPageService pageService;
+	
 	@RequestMapping("/comList")
-	public String comlist(HttpServletRequest request, Model model) {
-		log.info("comList!!!!!!");
+	public String comlist(HttpServletRequest request, Model model, Standard std) {
+		log.info("@# comList!!!!!!");
+		log.info("@# CompanyListPage controller std!!=>"+std);
 		
 		ArrayList<CompanyInfoDTO> list = infoService.comList();
 		model.addAttribute("comList", list);
@@ -51,6 +59,9 @@ public class MainController {
 
     	ArrayList<String> locationList = infoService.getLocationList();
     	model.addAttribute("locationList",locationList);
+    	
+//    	company 페이징
+//    	ArrayList<CompanyInfoDAO> pageList = pageService.CompanyPageList(std);
 		
 		return "comList";
 	};

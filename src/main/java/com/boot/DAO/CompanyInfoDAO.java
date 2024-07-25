@@ -21,6 +21,7 @@ public interface CompanyInfoDAO {
 	
 /*
 	07/25 10:40 민중
+	드롭다운 db추가
 */
 	public ArrayList<String> getJobList(); // 직군/직무 리스트
 	

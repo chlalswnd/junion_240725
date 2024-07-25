@@ -4,7 +4,7 @@
 <!--com_name, -->
 <mapper namespace="com.boot.DAO.CardPageDAO">
 
-	<select id="cardPageList" resultType="com.boot.DTO.ComNoticeDTO">
+	<select id="companyPageList" resultType="com.boot.DTO.CompanyInfoDTO">
 	
 	<![CDATA[ 
 		select row_noticeNum, notice_num, notice_title, notice_area1, notice_area2, notice_career 
