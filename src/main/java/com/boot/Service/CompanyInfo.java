@@ -14,7 +14,8 @@ public interface CompanyInfo {
 	public void modify_Info(HashMap<String, String> param);//기업 정보 수정(기본)
 	public CompanyInfoDTO companyInfoUpdate(String com_email);//기업 상세정보 수정 페이지 이동
 	public void modify_Detail(HashMap<String, String> param);//기업 정보 수정(상세)
-	public ArrayList<CompanyInfoDTO> comList(Criteria4 cri);//기업목록
+//	public ArrayList<CompanyInfoDTO> comList(Criteria4 cri);//기업목록
+	public ArrayList<CompanyInfoDTO> comList();//기업목록
 	public ArrayList<CompanyInfoDTO> comListByNum(String comScrapArrStr);//기업목록
 	public CompanyInfoDTO comInfoByNum(int com_num);//기업정보조회
 	

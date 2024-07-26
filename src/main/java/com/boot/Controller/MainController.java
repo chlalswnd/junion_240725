@@ -11,15 +11,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.boot.DAO.CompanyInfoDAO;
-import com.boot.DAO.CompanyListPageDAO;
 import com.boot.DTO.ComNoticeDTO;
 import com.boot.DTO.CompanyInfoDTO;
+import com.boot.DTO.CompanyPageDTO;
 import com.boot.DTO.Criteria4;
 import com.boot.DTO.PageDTO2;
 import com.boot.DTO.PageDTO3;
 import com.boot.DTO.Standard;
+import com.boot.DTO.Standard2;
 import com.boot.Service.CompanyInfo;
-import com.boot.Service.CompanyListPageService;
+import com.boot.Service.CompanyPageService;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -42,14 +43,15 @@ public class MainController {
 	@Autowired
 	private CompanyInfo infoService;
 	
-//	@Autowired
-//	private CompanyListPageService pageService;
+	@Autowired
+	private CompanyPageService pageService;
 	
 	@RequestMapping("/comList")
-	public String comlist(HttpServletRequest request, Model model, Criteria4 cri) {
+//	public String comlist(HttpServletRequest request, Model model, Criteria4 cri) {
+	public String comlist(HttpServletRequest request, Model model, Standard2 std) {
 		log.info("@# comList!!!!!!");
 		
-		ArrayList<CompanyInfoDTO> list = infoService.comList(cri);
+		ArrayList<CompanyInfoDTO> list = infoService.comList();
 		model.addAttribute("comList", list);
 		
 //		0725 10:40 민중
@@ -66,9 +68,13 @@ public class MainController {
     	
 //    	company 페이징
 //    	ArrayList<CompanyInfoDAO> pageList = pageService.CompanyPageList(std);
-//    	ArrayList<CompanyInfoDTO> comList = infoService.comList(cri);  
+//    	ArrayList<CompanyInfoDTO> comList = infoService.comList(cri);
+    	ArrayList<CompanyInfoDAO> companyList = pageService.companyPageList(std);
+    	model.addAttribute("companyList", companyList);
+    	model.addAttribute("paging", new CompanyPageDTO(123, std));
     	int total = infoService.getTotalCount();
-    	model.addAttribute("pageMaker", new PageDTO3(total, cri));
+//    	model.addAttribute("pageMaker", new PageDTO3(total, cri));
+//    	model.addAttribute("pageMaker", new PageDTO3(total, cri));
 		
 		return "comList";
 	};

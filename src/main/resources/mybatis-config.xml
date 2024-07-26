@@ -27,6 +27,7 @@
 		<mapper resource="mybatis/mappers/cardPage.xml"/>
 		<mapper resource="mybatis/mappers/companyInfo.xml"/>
 		<mapper resource="mybatis/mappers/jobpostingIndividual.xml"/>
+		<mapper resource="mybatis/mappers/companyPage.xml"/>
 	</mappers>
 </configuration>
 

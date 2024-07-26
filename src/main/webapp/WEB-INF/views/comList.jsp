@@ -431,53 +431,51 @@
 										</c:forEach>
 									</div> <!-- milist 끝-->
 									<!-- </div> latest 끝 -->
-									<h3>${pageMaker}</h3>
-									<div class="div_page">
-										<ul>
-											<c:if test="${pageMaker.prev}">
-												<!-- <li>[Previous]</li> -->
-												<li class="paginate_button">
-													<a href="${pageMaker.startpage - 1}">
-														[Previous]
-													</a>
-												</li>
-											</c:if>
-											<c:forEach var="num" begin="${pageMaker.startpage}"
-												end="${pageMaker.endpage}">
-												<!-- <li>[${num}]</li> -->
-												<!-- <li ${pageMaker.cri.pageNum == num ? "style='color: red;'" : ""}> -->
-												<li class="paginate_button" ${pageMaker.cri.pageNum==num
-													? "style='background-color: yellow;'" : "" }>
-													<!-- [${num}] -->
-													<a href="${num}">
-														[${num}]
-													</a>
-												</li>
-											</c:forEach>
-											<c:if test="${pageMaker.next}">
-												<!-- <li>[Next]</li> -->
-												<li class="paginate_button">
-													<a href="${pageMaker.endpage + 1}">
-														[Next]
-													</a>
-												</li>
-											</c:if>
-										</ul>
-									</div>
+									<div class="pagingbox">
+										<!-- <h3>${paging}</h3> -->
+										<div class="paging">
+											<ul>
+												<c:if test="${paging.prev}">
+													<!-- <li>[Previous]</li> -->
+													<li class="paginate_button">
+														<a href="${paging.startpage - 1}">
+															[Previous]
+														</a>
+													</li>
+												</c:if>
 
-									<form id="actionForm" method="get">
-										<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
-										<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
-										<!-- 페이징 검색시 페이지 번호 클릭할 때 필요한 파라미터 -->
-										<input type="hidden" name="type" value="${pageMaker.cri.type}">
-										<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
-									</form>
+												<c:forEach var="num" begin="${paging.startpage}"
+													end="${paging.endpage}">
+													<li class="paginate_button" ${paging.std.pageNum==num
+														? "style='background-color: yellow'" : "" }>
+														<!-- [${num}] -->
+														<a href="${num}">
+															[${num}]
+														</a>
+													</li>
+												</c:forEach>
+
+												<c:if test="${paging.next}">
+													<!-- <li>[Next]</li> -->
+													<li class="paginate_button">
+														<a href="${paging.endpage + 1}">
+															[Next]
+														</a>
+													</li>
+												</c:if>
+											</ul>
+										</div><!--paging-->
+									</div><!--pagingbox-->
 
 								</div> <!-- devlist 끝 -->
 							</div> <!-- wrap 끝 -->
 						</section> <!--section 끝 -->
 
 						<%@ include file="footer.jsp" %>
+							<form id="" method="get" action="companyPageList">
+								<input type="hidden" name="pageNum" value="${paging.std.pageNum}">
+								<input type="hidden" name="amount" value="${paging.std.amount}">
+							</form>
 				</body>
 
 				</html>

@@ -32,11 +32,11 @@ public class CompanyInfoImpl implements CompanyInfo{
 	private SqlSession sqlSession;
 
 	@Override
-	public ArrayList<CompanyInfoDTO> comList(Criteria4 cri) {  
+	public ArrayList<CompanyInfoDTO> comList() {  
 		log.info("@# comList list");
 		
 		CompanyInfoDAO dao = sqlSession.getMapper(CompanyInfoDAO.class); 
-		ArrayList<CompanyInfoDTO> list = dao.comList(cri);  // dao값을 배열CompanyInfoDTO 'list' 에 집어넣음
+		ArrayList<CompanyInfoDTO> list = dao.comList();  // dao값을 배열CompanyInfoDTO 'list' 에 집어넣음
 		
 		// 스택 리스트 콤마로 나눠서 배열에 담음
 		for (int i = 0; i < list.size(); i++) {

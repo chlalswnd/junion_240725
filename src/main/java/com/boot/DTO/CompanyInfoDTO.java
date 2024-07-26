@@ -48,4 +48,5 @@ public class CompanyInfoDTO {
     //  07/26 최민중
     private List<String> stackList;
     private String stack_names;
+
 }
