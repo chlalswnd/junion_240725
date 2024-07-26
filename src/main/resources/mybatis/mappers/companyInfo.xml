@@ -6,14 +6,27 @@
 
 <!-- 	민중  com_job, com_stack, notice_num, com_scrap, com_no 제외--> <!-- 기업 리스트 목록 페이지-->
  <!-- 07/25 민중 com_year dateformat 년도만 추출 추가-->
+<!--    <select id="comList" resultType="com.boot.DTO.CompanyInfoDTO">-->
+<!--	   select com_email, com_pw, com_pw_check, com_name, com_serial_number, -->
+<!--		  user_type, com_tel, com_star, com_location, date_format(com_year, "%Y") as com_year, com_content, -->
+<!--		  com_sale, com_type, com_salary, com_CEO, com_site, com_employee, -->
+<!--		  com_person, update_date,-->
+<!--	        TIMESTAMPDIFF(YEAR, com_year, CURDATE()) AS experienceYears,-->
+<!--	        TIMESTAMPDIFF(MONTH, com_year, CURDATE()) % 12 AS experienceMonths-->
+<!--	    FROM COM_TB-->
+<!--	    ORDER BY update_date DESC-->
+<!--    </select>-->
+ <!-- 07/25 민중 com_tb + com_stack 연결 변경-->
     <select id="comList" resultType="com.boot.DTO.CompanyInfoDTO">
-	   select com_email, com_pw, com_pw_check, com_name, com_serial_number, 
+    select ct.com_email, com_pw, com_pw_check, com_name, com_serial_number, 
 		  user_type, com_tel, com_star, com_location, date_format(com_year, "%Y") as com_year, com_content, 
 		  com_sale, com_type, com_salary, com_CEO, com_site, com_employee, 
-		  com_person, update_date,
+		  com_person, update_date, cs.stack as com_stack,
 	        TIMESTAMPDIFF(YEAR, com_year, CURDATE()) AS experienceYears,
 	        TIMESTAMPDIFF(MONTH, com_year, CURDATE()) % 12 AS experienceMonths
-	    FROM COM_TB
+	    FROM COM_TB ct 
+        left join com_stack cs
+        on ct.com_email = cs.com_email
 	    ORDER BY update_date DESC
     </select>
 <!--    <select id="comList" resultType="com.boot.DTO.CompanyInfoDTO">-->
@@ -92,7 +105,10 @@
     </select>
 	
 	<select id="getLocationList" resultType="String"> 
-		SELECT location_name FROM location;
+		SELECT location_name FROM location
 	</select>
 	<!-- 민중 끝-->
+    <select id="getTotalCount" resultType="int"> 
+		SELECT count(*) FROM com_tb
+	</select>
 </mapper>

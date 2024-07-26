@@ -311,7 +311,9 @@
 													<select class="select1" id="select" name="select">
 														<option value="">기술스택</option>
 														<c:forEach var="stack" items="${stackList}">
-															<option value="s1">${stack}</option>
+															<option value="${stack}" <c:if
+																test="${pageMaker.cri.type eq stack}">selected</c:if>
+																>${stack}</option>
 														</c:forEach>
 													</select>
 												</form>
@@ -359,7 +361,8 @@
 
 										<div class="right" id="tabs">
 											<button class="fil2" onclick="switchTab('latest', event)">최신순</button>
-											<button class="fil2" onclick="switchTab('recommendation', event)">추천순</button>
+											<button class="fil2"
+												onclick="switchTab('recommendation', event)">추천순</button>
 											<button class="fil2" onclick="switchTab('hit', event)">조회순</button>
 										</div>
 										<!-- <div class="right" id="tabs">
@@ -381,88 +384,94 @@
 								</div>
 							</div> -->
 
-									<div id="latest" class="form-box active"> <!--  latest 시작-->
-										<div class="mtlist"> <!--  mtlist 시작-->
-											<c:forEach var="dto" items="${comList}">
-												<div class="menutitle">
-													<div class="menubox">
-														<a href="/comDetail?com_email=${dto.com_email}" class="tag">
-															<div class="img"></div>
-														</a>
-														<div class="scrap">
-															<div class="s1">
-																<a href="#" class="fa-solid fa-bookmark"
-																	style="font-size: 20px; color: #e5e5ec;"></a>
-															</div>
+									<!-- <div id="latest" class="form-box active">  latest 시작 -->
+									${comList}
+									<div class="mtlist"> <!--  mtlist 시작-->
+										<c:forEach var="dto" items="${comList}">
+											<div class="menutitle">
+												<div class="menubox">
+													<a href="/comDetail?com_email=${dto.com_email}" class="tag">
+														<div class="img"></div>
+													</a>
+													<div class="scrap">
+														<div class="s1">
+															<a href="#" class="fa-solid fa-bookmark"
+																style="font-size: 20px; color: #e5e5ec;"></a>
 														</div>
 													</div>
+												</div>
 
-													<div class="titlebox">
-														<a href="/comDetail?com_email=${dto.com_email}">
-															<div class="title">
-																<h5 class="t1">
-																	${dto.com_name}
-																</h5>
-															</div>
-														</a>
-														<!-- <a href="연동 기업상세/index.html"> -->
-														<div class="company">
-															<h5 class="c1">
-																★ ${dto.com_star}
+												<div class="titlebox">
+													<a href="/comDetail?com_email=${dto.com_email}">
+														<div class="title">
+															<h5 class="t1">
+																${dto.com_name}
 															</h5>
 														</div>
-														<div class="location">
-															<h5 class="l1">
-																${dto.com_location} • ${dto.experienceYears}년차
-																(${dto.com_year})
-															</h5>
-														</div>
-														<!-- <div class="experience">
+													</a>
+													<!-- <a href="연동 기업상세/index.html"> -->
+													<div class="company">
+														<h5 class="c1">
+															★ ${dto.com_star}
+														</h5>
+													</div>
+													<div class="location">
+														<h5 class="l1">
+															${dto.com_location} • ${dto.experienceYears}년차
+															(${dto.com_year})
+														</h5>
+													</div>
+													<!-- <div class="experience">
 												<h5 class="y1">
 												</h5>
 											</div> -->
-														</a>
-													</div>
+													</a>
 												</div>
+											</div>
+										</c:forEach>
+									</div> <!-- milist 끝-->
+									<!-- </div> latest 끝 -->
+									<h3>${pageMaker}</h3>
+									<div class="div_page">
+										<ul>
+											<c:if test="${pageMaker.prev}">
+												<!-- <li>[Previous]</li> -->
+												<li class="paginate_button">
+													<a href="${pageMaker.startpage - 1}">
+														[Previous]
+													</a>
+												</li>
+											</c:if>
+											<c:forEach var="num" begin="${pageMaker.startpage}"
+												end="${pageMaker.endpage}">
+												<!-- <li>[${num}]</li> -->
+												<!-- <li ${pageMaker.cri.pageNum == num ? "style='color: red;'" : ""}> -->
+												<li class="paginate_button" ${pageMaker.cri.pageNum==num
+													? "style='background-color: yellow;'" : "" }>
+													<!-- [${num}] -->
+													<a href="${num}">
+														[${num}]
+													</a>
+												</li>
 											</c:forEach>
-										</div> <!-- milist 끝-->
-									</div> <!-- latest 끝-->
-									
-									<div class="pagingbox">
-										<!-- <h3>${paging}</h3> -->
-										<div class="paging">
-											<ul>
-												<c:if test="${paging.prev}">
-													<!-- <li>[Previous]</li> -->
-													<li class="paginate_button">
-														<a href="${paging.startpage - 1}">
-															[Previous]
-														</a>
-													</li>
-												</c:if>
+											<c:if test="${pageMaker.next}">
+												<!-- <li>[Next]</li> -->
+												<li class="paginate_button">
+													<a href="${pageMaker.endpage + 1}">
+														[Next]
+													</a>
+												</li>
+											</c:if>
+										</ul>
+									</div>
 
-												<c:forEach var="num" begin="${paging.startpage}"
-													end="${paging.endpage}">
-													<li class="paginate_button" ${paging.std.pageNum==num
-														? "style='background-color: yellow'" : "" }>
-														<!-- [${num}] -->
-														<a href="${num}">
-															[${num}]
-														</a>
-													</li>
-												</c:forEach>
-
-												<c:if test="${paging.next}">
-													<!-- <li>[Next]</li> -->
-													<li class="paginate_button">
-														<a href="${paging.endpage + 1}">
-															[Next]
-														</a>
-													</li>
-												</c:if>
-											</ul>
-										</div><!--paging-->
-									</div><!--pagingbox-->
+									<form id="actionForm" method="get">
+										<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
+										<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
+										<!-- 페이징 검색시 페이지 번호 클릭할 때 필요한 파라미터 -->
+										<input type="hidden" name="type" value="${pageMaker.cri.type}">
+										<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
+									</form>
 
 								</div> <!-- devlist 끝 -->
 							</div> <!-- wrap 끝 -->
@@ -490,9 +499,11 @@
 					});
 
 
+
+
 					var actionForm = $("#actionForm");
 
-					//	페이지번호 처리
+					//페이지 번호 처리
 					// $(".paginate_button").on("click", function (e){
 					$(".paginate_button a").on("click", function (e) {
 						//기본 동작 막음: 페이지 링크를 통해서 이동
@@ -500,71 +511,16 @@
 						console.log("click~!!!");
 						console.log("@# href=>" + $(this).attr("href"));
 
-						// stmt.executeUpdate(s);
-
-						// 게시글 클릭후 뒤로가기 누른후 다른 페이지 클릭할때 &boardNo=번호 계속 누적되는거 방지
-						var bno = actionForm.find("input[name='board_no']").val();
+						// 게시글 클릭후 뒤로가기 누른 후 다른 게시글 클릭할 때 &boardNo=번호 계속 누적되는거 방지
+						var bno = actionForm.find("input[name='boardNo']").val();
 						if (bno != "") {
-							actionForm.find("input[name='board_no']").remove();
+							actionForm.find("input[name='boardNo']").remove();
 						}
 
 						actionForm.find("input[name='pageNum']").val($(this).attr("href"));
 						// actionForm.submit();
-						actionForm.attr("action", "boardList").submit();
-					});//end of paginate_button clcik
-
-
-
-
-					// 	게시글 처리
-					$(".move_link").on("click", function (e) {
-						e.preventDefault();
-
-						console.log("@# move_link click~!!!");
-						console.log("@# href=>" + $(this).attr("href"));
-
-
-
-						var targetBno = $(this).attr("href");
-
-						// 게시글 클릭후 뒤로가기 누른후 다른 게시글 클릭할때 &boardNo=번호 계속 누적되는거 방지
-						var bno = actionForm.find("input[name='board_no']").val();
-						if (bno != "") {
-							actionForm.find("input[name='board_no']").remove();
-						}
-
-						// "content_view?boardNo=${dto.boardNo}" 를 actionForm 로 처리
-						actionForm.append("<input type='hidden' name='board_no' value='" + targetBno + "'>");
-						// actionForm.submit();
-						// 컨트롤러에 content_view 로 찾아감
-						actionForm.attr("action", "boardDetailView").submit();
-					});//end of move_link click
-
-
-					var searchForm = $("#searchForm");
-
-
-					// search 버튼 클릭
-					//	$("#searchForm").on("click", function(){
-					$("#searchForm button").on("click", function () {
-						// alert("검색");
-
-
-						// 아래는 검색 종류까지만 할때 참고
-						//  if (!searchForm.find("option:selected").val()){
-						//	 alert("검색종류를 선택하세요");
-						// 	 return false;
-						//  }
-
-						if (searchForm.fin("option:selected").val() != "" && !searchForm.find("input[name = 'keyword']").val()) {
-							alert("키워드를 입력하세요");
-							return false;
-
-						}
-
-						searchForm.attr("action", "boardList").submit();
-
-					}); // searchForm click 끝
+						actionForm.attr("action", "comList").submit();
+					});//end of paginate_button click
 
 
 					// type 콤보박스 변경
@@ -575,6 +531,7 @@
 							searchForm.find("input[name = 'keyword']").val("");
 						}
 					}); // searchForm select change 끝
+
 					function switchTab(tab, event) {
 						document.querySelectorAll('.form-box').forEach(function (el) {
 							el.classList.remove('active');

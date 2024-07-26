@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.apache.ibatis.annotations.Mapper;
 
 import com.boot.DTO.CompanyInfoDTO;
+import com.boot.DTO.Criteria4;
 
 @Mapper
 public interface CompanyInfoDAO {
@@ -15,7 +16,7 @@ public interface CompanyInfoDAO {
 	public CompanyInfoDTO companyInfoUpdate(String com_email);//기업 상세정보 수정 페이지
 	public void modify_Detail(HashMap<String, String> param);
 	public void modify_Detail(CompanyInfoDTO companyInfoDTO);
-	public ArrayList<CompanyInfoDTO> comList();//기업목록
+	public ArrayList<CompanyInfoDTO> comList(Criteria4 cri);//기업목록
 	public ArrayList<CompanyInfoDTO> comListByNum(String comScrapArrStr);//기업목록
 	public CompanyInfoDTO comInfoByNum(int com_num);//기업정보조회
 	
@@ -28,4 +29,7 @@ public interface CompanyInfoDAO {
 	public ArrayList<String> getStackList(); // 기술 스킬 리스트
 
 	public ArrayList<String> getLocationList(); // 지역 리스트
+	
+	public int getTotalCount();
+	
 }  

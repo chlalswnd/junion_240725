@@ -44,4 +44,8 @@ public class CompanyInfoDTO {
 //	07/25 최민중
 	private int experienceYears; // 경력 년수
     private int experienceMonths; // 경력 개월 수
+
+    //  07/26 최민중
+    private List<String> stackList;
+    private String stack_names;
 }

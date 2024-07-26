@@ -1,0 +1,103 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.boot.DAO.jobpostingIndividualDAO">
+
+<!--    <select id="jobpostingIndividualSupport" resultType="com.boot.DTO.jobpostingIndividualDTO"> -->
+<!--		SELECT -->
+<!--		    u.user_name,-->
+<!--		    u.user_gender,-->
+<!--		    r.resume_age,-->
+<!--		    r.career_month,-->
+<!--		    r.resume_writeDate,-->
+<!--		    r.resume_num,-->
+<!--		    YEAR(CURDATE()) - YEAR(r.resume_age) + 1 AS korean_age,-->
+<!--		    (SELECT -->
+<!--		        GROUP_CONCAT(rs.stack_name)-->
+<!--		     FROM-->
+<!--		        resume_stack rs-->
+<!--		     WHERE rs.resume_num = r.resume_num-->
+<!--		    ) AS stack_names-->
+<!--		FROM -->
+<!--		    resume_tb r-->
+<!--		JOIN user_tb u ON r.user_email = u.user_email-->
+<!--		ORDER BY -->
+<!--		    r.resume_num DESC-->
+<!--	</select>-->
+	
+	
+		<sql id="criteria3">
+		<if test='type == "J"'>
+			WHERE boardTitle = #{keyword}
+		</if>
+		<if test='type != null'>
+			WHERE resume_num IN (select resume_num from resume_stack where stack_name = #{type})
+		</if>
+	</sql>
+<!--    <![CDATA[ : mybatis 에서 특수문자 인식처리 -->
+    <select id="jobpostingIndividualSupport" resultType="com.boot.DTO.jobpostingIndividualDTO">
+    <![CDATA[ 
+		select rownum, user_name, user_gender, resume_age, career_month, resume_writeDate, resume_num, stack_names
+			from (select rownum, user_name, user_gender, resume_age, career_month, resume_writeDate, resume_num, stack_names
+			from (select row_number() over(ORDER BY r.resume_num DESC) as rownum,
+									    u.user_name,
+									    u.user_gender,
+									    r.resume_age,
+									    r.career_month,
+									    r.resume_writeDate,
+									    r.resume_num,
+									    YEAR(CURDATE()) - YEAR(r.resume_age) + 1 AS korean_age,
+									    (SELECT 
+									        GROUP_CONCAT(rs.stack_name)
+									     FROM
+									        resume_stack rs
+									     WHERE rs.resume_num = r.resume_num
+									    ) AS stack_names 
+									  FROM resume_tb r
+									  JOIN user_tb u ON r.user_email = u.user_email
+									  ]]>
+									  <include refid="criteria3"></include>
+									  <![CDATA[
+									  ORDER BY r.resume_num DESC) a
+			where rownum <= (#{pageNum} * #{amount})
+				)aa
+		where rownum > (#{pageNum}-1) * #{amount} 
+		]]>
+    </select>
+	
+
+    <select id="getStackList" resultType="String"> 
+		SELECT 
+		    stack_name
+		FROM 
+		    stack
+	</select>
+
+    <select id="getLocationList" resultType="String"> 
+		SELECT
+			location_name
+		FROM
+			location;
+	</select>
+
+    <select id="getTotalCount" resultType="int"> 
+		SELECT
+			count(*)
+		FROM
+			resume_tb;
+	</select>
+	
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+

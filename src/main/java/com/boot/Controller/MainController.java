@@ -14,6 +14,9 @@ import com.boot.DAO.CompanyInfoDAO;
 import com.boot.DAO.CompanyListPageDAO;
 import com.boot.DTO.ComNoticeDTO;
 import com.boot.DTO.CompanyInfoDTO;
+import com.boot.DTO.Criteria4;
+import com.boot.DTO.PageDTO2;
+import com.boot.DTO.PageDTO3;
 import com.boot.DTO.Standard;
 import com.boot.Service.CompanyInfo;
 import com.boot.Service.CompanyListPageService;
@@ -43,11 +46,10 @@ public class MainController {
 //	private CompanyListPageService pageService;
 	
 	@RequestMapping("/comList")
-	public String comlist(HttpServletRequest request, Model model, Standard std) {
+	public String comlist(HttpServletRequest request, Model model, Criteria4 cri) {
 		log.info("@# comList!!!!!!");
-		log.info("@# CompanyListPage controller std!!=>"+std);
 		
-		ArrayList<CompanyInfoDTO> list = infoService.comList();
+		ArrayList<CompanyInfoDTO> list = infoService.comList(cri);
 		model.addAttribute("comList", list);
 		
 //		0725 10:40 민중
@@ -60,8 +62,13 @@ public class MainController {
     	ArrayList<String> locationList = infoService.getLocationList();
     	model.addAttribute("locationList",locationList);
     	
+//    	model.addAttribute("pageMaker", new PageDTO3(total, cri));
+    	
 //    	company 페이징
 //    	ArrayList<CompanyInfoDAO> pageList = pageService.CompanyPageList(std);
+//    	ArrayList<CompanyInfoDTO> comList = infoService.comList(cri);  
+    	int total = infoService.getTotalCount();
+    	model.addAttribute("pageMaker", new PageDTO3(total, cri));
 		
 		return "comList";
 	};

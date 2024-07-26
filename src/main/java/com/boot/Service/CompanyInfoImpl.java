@@ -16,6 +16,7 @@ import com.boot.DAO.JoinDAO;
 import com.boot.DAO.boardBoardDAO;
 import com.boot.DTO.ComNoticeDTO;
 import com.boot.DTO.CompanyInfoDTO;
+import com.boot.DTO.Criteria4;
 import com.boot.DTO.JoinDTO;
 import com.boot.DTO.boardBoardDTO;
 
@@ -31,11 +32,22 @@ public class CompanyInfoImpl implements CompanyInfo{
 	private SqlSession sqlSession;
 
 	@Override
-	public ArrayList<CompanyInfoDTO> comList() {  
+	public ArrayList<CompanyInfoDTO> comList(Criteria4 cri) {  
 		log.info("@# comList list");
 		
 		CompanyInfoDAO dao = sqlSession.getMapper(CompanyInfoDAO.class); 
-		ArrayList<CompanyInfoDTO> list = dao.comList();  // dao값을 배열CompanyInfoDTO 'list' 에 집어넣음 
+		ArrayList<CompanyInfoDTO> list = dao.comList(cri);  // dao값을 배열CompanyInfoDTO 'list' 에 집어넣음
+		
+		// 스택 리스트 콤마로 나눠서 배열에 담음
+		for (int i = 0; i < list.size(); i++) {
+			String stackList = list.get(i).getStack_names();
+			if (stackList != null && !stackList.isEmpty()) {
+	            List<String> stacks = Arrays.asList(stackList.split(","));
+	            list.get(i).setStackList(stacks);
+	        } else {
+	            list.get(i).setStackList(new ArrayList<>()); // 빈 리스트 설정
+	        }
+		}
 		
 		return list;
 	}
@@ -179,5 +191,14 @@ public class CompanyInfoImpl implements CompanyInfo{
 		return list;
 	}
 
+/*
+	07/26 11:50 민중
+*/
+	@Override
+	public int getTotalCount() {
+		CompanyInfoDAO dao = sqlSession.getMapper(CompanyInfoDAO.class);
+		int total = dao.getTotalCount();
+		return total;
+	}
 
 }

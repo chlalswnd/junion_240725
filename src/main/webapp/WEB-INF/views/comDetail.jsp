@@ -571,7 +571,7 @@ font-weight: 200; */
 				<div class="columnAA">
 					<h5 class="detail">
 						<div class="sectionConBody tech">
-							<div class="Bodycon tech">                            
+							<div class="Bodycon tech">
 								<button class="tech">
 									<h5 class="mm1">JAVA</h5>
 								</button>
@@ -659,7 +659,7 @@ font-weight: 200; */
 						</div>
 						<div class="comname2">
 							<h5 class="name">
-								10년 (${company.com_year}년 설립)
+								1(${company.com_year}년 설립)
 							</h5>
 						</div>
 						<div class="comname1">
